@@ -8,10 +8,10 @@ GameObject:
   serializedVersion: 4
   m_Component:
   - 4: {fileID: 498528}
-  - 61: {fileID: 6134656}
   - 50: {fileID: 5087102}
   - 212: {fileID: 21291052}
   - 114: {fileID: 11498056}
+  - 60: {fileID: 6072232}
   m_Layer: 0
   m_Name: Collidable_Square
   m_TagString: collidable
@@ -26,7 +26,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 167656}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: -.312999994, y: -.343999982, z: 0}
   m_LocalScale: {x: .5, y: .5, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
@@ -38,7 +38,7 @@ Rigidbody2D:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 167656}
-  m_Mass: 8
+  m_Mass: 15
   m_LinearDrag: 0
   m_AngularDrag: 0
   m_GravityScale: 1
@@ -47,8 +47,8 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 1
   m_Constraints: 0
---- !u!61 &6134656
-BoxCollider2D:
+--- !u!60 &6072232
+PolygonCollider2D:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
@@ -58,8 +58,13 @@ BoxCollider2D:
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_Offset: {x: 0, y: 0}
-  serializedVersion: 2
-  m_Size: {x: 1.29999995, y: 1.29999995}
+  m_Points:
+    m_Paths:
+    - - {x: -.629999995, y: .639999986}
+      - {x: -.628499508, y: .631500244}
+      - {x: -.639999986, y: -.639999986}
+      - {x: .639999866, y: -.634249687}
+      - {x: .639999986, y: .639999986}
 --- !u!114 &11498056
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -71,7 +76,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: db980c9198800444ca5b8537e7edcb73, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Life: 3
+  Life: 8
+  isValid: 1
+  type: square
 --- !u!212 &21291052
 SpriteRenderer:
   m_ObjectHideFlags: 1
@@ -156,6 +163,10 @@ Prefab:
     - target: {fileID: 0}
       propertyPath: Life
       value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: type
+      value: square
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 0}

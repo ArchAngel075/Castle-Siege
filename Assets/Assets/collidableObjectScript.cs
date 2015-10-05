@@ -3,6 +3,8 @@ using System.Collections;
 
 public class collidableObjectScript : MonoBehaviour {
 	public float Life;
+	public bool isValid = false;
+	public string type = "name";
 	// Use this for initialization
 	void Start () {
 		
@@ -10,6 +12,9 @@ public class collidableObjectScript : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
+		if (!isValid) {
+			Destroy (this.gameObject);
+		}
 		if (Life <= 0) {
 			Destroy (this.gameObject);
 		}

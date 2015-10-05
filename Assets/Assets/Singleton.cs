@@ -21,6 +21,12 @@ public class Singleton : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
+		GameObject.Find("AppDataText").GetComponent<UnityEngine.UI.Text>().text = Application.persistentDataPath;
+		System.IO.Directory.CreateDirectory (Application.persistentDataPath + "/Levels");
+		Camera.main.GetComponent<LevelWorkerScript> ().readLevelFile (System.IO.File.ReadAllText (Application.persistentDataPath + "/Levels/_load.hidden"));
+		foreach (GameObject obj in GameObject.FindGameObjectsWithTag("collidable")) {
+			obj.GetComponent<Rigidbody2D>().simulated = true;
+		}
 		targetTransform = Pos_Shooting.transform;
 		if (Application.platform == RuntimePlatform.Android) {
 			isWindows = false;
@@ -61,7 +67,11 @@ public class Singleton : MonoBehaviour {
 		Gizmos.color = Color.red;
 		Gizmos.DrawRay (lookRay.origin, lookRay.direction*-1);
 		Gizmos.color = Color.cyan;
-		Gizmos.DrawLine (GameObject.Find ("Cannon").GetComponent<Rigidbody2D>().position, Camera.main.ScreenToWorldPoint(Input.mousePosition));
+		//Gizmos.DrawLine (GameObject.Find ("Cannon").GetComponent<Rigidbody2D>().position, Camera.main.ScreenToWorldPoint(Input.mousePosition));
 		
+	}
+
+	public void QuitToSelection(){
+		Application.LoadLevel ("SelectScene");
 	}
 }

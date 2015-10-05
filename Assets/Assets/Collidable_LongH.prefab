@@ -76,6 +76,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Life: 3
+  isValid: 0
+  type: longH
 --- !u!212 &21221412
 SpriteRenderer:
   m_ObjectHideFlags: 1
@@ -128,6 +130,10 @@ Prefab:
     - target: {fileID: 0}
       propertyPath: Life
       value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: type
+      value: longH
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 0}

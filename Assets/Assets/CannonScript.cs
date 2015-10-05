@@ -4,20 +4,14 @@ using System.Collections;
 public class CannonScript : MonoBehaviour {
 	private GameObject Cannon;
 	private Singleton Singleton;
-	private GameObject PowerSlider;
 	public GameObject Ball;
 	public bool isPressing = false;
 	public float Power = 0f;
 	public bool touchOne;
-	public bool touchTwo;
-
-	public Vector3 v1;
-	public Vector3 v2;
 
 	// Use this for initialization
 	void Start () {
 		Cannon = GameObject.Find ("Cannon");
-		PowerSlider = GameObject.Find ("SliderCanvas");
 
 		Singleton = GameObject.Find ("Ground").GetComponent<Singleton> ();
 		//Singleton.isWindows
@@ -41,7 +35,6 @@ public class CannonScript : MonoBehaviour {
 			additive = -180f;
 		}
 		if (!Singleton.isBall) {
-			PowerSlider.GetComponent<Canvas>().enabled = false;
 
 			if (Input.GetMouseButton (0)) {
 				Cannon.transform.rotation = Quaternion.Euler(
@@ -100,7 +93,6 @@ public class CannonScript : MonoBehaviour {
 		aBall.GetComponent<Rigidbody2D> ().AddForce (forceComps);
 		Singleton.isBall = true;
 		Singleton.setLooking ();
-		PowerSlider.GetComponent<Canvas> ().enabled = false;
 		Power = 0;
 		
 	}
@@ -112,7 +104,7 @@ public class CannonScript : MonoBehaviour {
 		} else {
 			refPoint = Camera.main.ScreenToWorldPoint(Input.mousePosition);
 		}
-		//PowerSlider.GetComponent<Canvas>().enabled = true;
+
 		Power = Vector2.Distance(Cannon.GetComponent<Rigidbody2D> ().position,refPoint)*500;
 
 		//Debug.Log("Power " + Vector2.Distance(Cannon.GetComponent<Rigidbody2D> ().position,refPoint)*500);
@@ -123,7 +115,6 @@ public class CannonScript : MonoBehaviour {
 		if (Power > 4000f) {
 			Power = 4000f;
 		}
-		//PowerSlider.GetComponentInChildren<UnityEngine.UI.Slider>().value = (Power/4000f);
 	}
 
 	float GetAngleOf(Vector2 v1,Vector2 v2){

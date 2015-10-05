@@ -10,8 +10,8 @@ GameObject:
   - 4: {fileID: 452286}
   - 50: {fileID: 5097382}
   - 212: {fileID: 21241832}
-  - 60: {fileID: 6063430}
   - 114: {fileID: 11444784}
+  - 60: {fileID: 6063430}
   m_Layer: 0
   m_Name: Collidable_Triangle
   m_TagString: collidable
@@ -82,6 +82,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Life: 3
+  isValid: 0
+  type: triangle
 --- !u!212 &21241832
 SpriteRenderer:
   m_ObjectHideFlags: 1
@@ -134,6 +136,10 @@ Prefab:
     - target: {fileID: 0}
       propertyPath: Life
       value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: type
+      value: triangle
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 0}
