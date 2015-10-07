@@ -42,8 +42,14 @@ public class Singleton_editor : MonoBehaviour {
 		newCollidable.GetComponent<Rigidbody2D>().isKinematic = GameObject.Find("isSimulated").GetComponent<UnityEngine.UI.Toggle>().isOn;
 	}
 
-	void Start () {
+	public void DeleteInspected(){
+		if (inspectedObject != null) {
+			Destroy(inspectedObject);
+		}
 
+	}
+
+	void Start () {
 		GameObject.Find ("SaveFileDialog").GetComponent<Canvas> ().enabled = false;
 		//Debug.Log (Application.persistentDataPath);
 		PlacementPanelScript thePlacementPanel = GameObject.Find ("PlacementsPanel").GetComponent<PlacementPanelScript> ();
@@ -109,6 +115,10 @@ public class Singleton_editor : MonoBehaviour {
 		if (inspectedObject != null) {
 			inspectedObject.GetComponent<Transform>().rotation = Quaternion.Euler(0,0,((float)System.Convert.ToDouble(input)));
 		}
+	}
+
+	public void ToMainMenu(){
+		Application.LoadLevel("MainMenuScene");
 	}
 
 

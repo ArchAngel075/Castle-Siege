@@ -120,7 +120,7 @@ public class CannonScript : MonoBehaviour {
 			refPoint = Camera.main.ScreenToWorldPoint(Input.mousePosition);
 		}
 
-		Power = Vector2.Distance(Cannon.GetComponent<Rigidbody2D> ().position,refPoint)*250;
+		Power = Vector2.Distance(Cannon.GetComponent<Rigidbody2D> ().position,refPoint)*100;
 		Power *= 90;
 
 		//Debug.Log("Power " + Vector2.Distance(Cannon.GetComponent<Rigidbody2D> ().position,refPoint)*500);

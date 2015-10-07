@@ -28,12 +28,15 @@ public class Edit_ObjectScript : MonoBehaviour {
 
 			GetComponent<Transform>().position = new Vector2(GetComponent<Transform>().position.x + MouseDelta.x,GetComponent<Transform>().position.y + MouseDelta.y);
 		}
-		if (Input.GetMouseButtonDown (0) && isSelected && !isMouseOver) {
+		if (Input.GetMouseButtonDown (0) && isSelected && !isMouseOver && Input.mousePosition.y < 220) {
 			isSelected = false;
 			if(Camera.main.GetComponent<Singleton_editor>().inspectedObject != null){
 				Camera.main.GetComponent<Singleton_editor>().inspectedObject = null;
 			}
 			OnDeselect();
+		}
+		if (isSelected && Input.GetKeyDown (KeyCode.Delete)) {
+			Destroy (this.gameObject);
 		}
 		MouseLastFrame = Input.mousePosition;
 	}

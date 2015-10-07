@@ -23,8 +23,8 @@ public class Singleton : MonoBehaviour {
 	void Start () {
 		GameObject.Find ("AppDataText").GetComponent<UnityEngine.UI.Text> ().text = "";//Application.persistentDataPath;
 		System.IO.Directory.CreateDirectory (Application.persistentDataPath + "/Levels");
-		//Camera.main.GetComponent<LevelWorkerScript> ().readLevelFile (System.IO.File.ReadAllText (Application.persistentDataPath + "/Levels/_load.hidden"));
-		foreach (GameObject obj in GameObject.FindGameObjectsWithTag("collidable")) {
+		Camera.main.GetComponent<LevelWorkerScript> ().readLevelFile (System.IO.File.ReadAllText (Application.persistentDataPath + "/Levels/_load.hidden"));
+		Camera.main.GetComponent<analyticsScript> ().UpdatePlayedLevel (System.IO.Path.GetFileNameWithoutExtension( System.IO.File.ReadAllText (Application.persistentDataPath + "/Levels/_load.hidden")));		foreach (GameObject obj in GameObject.FindGameObjectsWithTag("collidable")) {
 			obj.GetComponent<Rigidbody2D>().isKinematic = true;
 		}
 		targetTransform = Pos_Shooting.transform;
