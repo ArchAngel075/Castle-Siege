@@ -25,7 +25,7 @@ public class Singleton : MonoBehaviour {
 		System.IO.Directory.CreateDirectory (Application.persistentDataPath + "/Levels");
 		//Camera.main.GetComponent<LevelWorkerScript> ().readLevelFile (System.IO.File.ReadAllText (Application.persistentDataPath + "/Levels/_load.hidden"));
 		foreach (GameObject obj in GameObject.FindGameObjectsWithTag("collidable")) {
-			obj.GetComponent<Rigidbody2D>().simulated = true;
+			obj.GetComponent<Rigidbody2D>().isKinematic = true;
 		}
 		targetTransform = Pos_Shooting.transform;
 		if (Application.platform == RuntimePlatform.Android) {

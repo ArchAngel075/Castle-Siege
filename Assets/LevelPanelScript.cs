@@ -38,15 +38,19 @@ public class LevelPanelScript : MonoBehaviour {
 		}
 	}
 
+	public void UpdateAll(){
+		updateStaticList ();
+		UpdatePanel ();
+	}
+
 
 	// Use this for initialization
 	void Start () {
-		updateStaticList ();
-		UpdatePanel ();
+		UpdateAll ();
 	}
 	
 	// Update is called once per frame
 	void Update () {
-	
+
 	}
 }

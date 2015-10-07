@@ -1,5 +1,14 @@
 2015-10-07  ArchAngel075  <jaco@kotze.com>
 
+	* EditorScene.unity:
+	* Singleton_editor.cs:
+	* LevelPanelScript.cs:
+	* Assets\Singleton.cs:
+	* LevelWorkerScript.cs:
+	  
+
+2015-10-07  ArchAngel075  <jaco@kotze.com>
+
 	* Assets\Main.unity:
 	* Assets\Ball.prefab:
 	* placementButton.cs:

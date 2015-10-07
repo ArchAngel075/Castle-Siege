@@ -28,7 +28,7 @@ public class Singleton_editor : MonoBehaviour {
 	public void UpdateSimulate(){
 		GameObject[] colls = GameObject.FindGameObjectsWithTag ("collidable");
 		foreach (GameObject obj in colls) {
-			obj.GetComponent<Rigidbody2D>().simulated = GameObject.Find("isSimulated").GetComponent<UnityEngine.UI.Toggle>().isOn;
+			obj.GetComponent<Rigidbody2D>().isKinematic = GameObject.Find("isSimulated").GetComponent<UnityEngine.UI.Toggle>().isOn;
 		}
 		//UnityEngine.Analytics.Analytics.
 	}
@@ -39,7 +39,7 @@ public class Singleton_editor : MonoBehaviour {
 
 		newCollidable.transform.SetParent (GameObject.Find ("GameCollidables").transform);
 		newCollidable.GetComponent<collidableObjectScript> ().isValid = true;
-		newCollidable.GetComponent<Rigidbody2D>().simulated = GameObject.Find("isSimulated").GetComponent<UnityEngine.UI.Toggle>().isOn;
+		newCollidable.GetComponent<Rigidbody2D>().isKinematic = GameObject.Find("isSimulated").GetComponent<UnityEngine.UI.Toggle>().isOn;
 	}
 
 	void Start () {
@@ -102,6 +102,13 @@ public class Singleton_editor : MonoBehaviour {
 
 	public void OpenSaveDialog(){
 		GameObject.Find ("SaveFileDialog").GetComponent<Canvas> ().enabled = true;
+	}
+
+	public void UpdateInspected_rotation(){
+		string input = GameObject.Find("RotationInput").GetComponent<UnityEngine.UI.InputField>().text;
+		if (inspectedObject != null) {
+			inspectedObject.GetComponent<Transform>().rotation = Quaternion.Euler(0,0,((float)System.Convert.ToDouble(input)));
+		}
 	}
 
 

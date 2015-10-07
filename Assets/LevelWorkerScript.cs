@@ -44,7 +44,7 @@ public class LevelWorkerScript : MonoBehaviour {
 		if (collidablesP.ContainsKey (Vars ["type"])) {
 			newCollidable = Instantiate (collidablesP [Vars ["type"]]);
 			newCollidable.GetComponent<collidableObjectScript> ().isValid = true;
-			newCollidable.GetComponent<Rigidbody2D> ().simulated = false;
+			newCollidable.GetComponent<Rigidbody2D> ().isKinematic = false;
 		} else {
 			Debug.LogError ("Unknown collidable type " + Vars ["type"]);
 		}
@@ -107,5 +107,33 @@ public class LevelWorkerScript : MonoBehaviour {
 			newCollidable.transform.SetParent (GameObject.Find ("GameCollidables").transform);
 			collidables.Add(newCollidable);
 		}
+	}
+
+	public void SaveAll(){
+		string path = Application.persistentDataPath + "/Levels/";
+		path += GameObject.Find ("FileNameInput").GetComponent<UnityEngine.UI.InputField> ().text;
+		path += ".cl";
+
+		//Save all collidables and states to [path]
+		GameObject[] colls = GameObject.FindGameObjectsWithTag ("collidable");
+		string workingSave = "";
+		string nl = System.Environment.NewLine;
+		//type=square;position={0,3};rotation=90;scale={-0.5,-0.5}
+		foreach (GameObject obj in colls) {
+			Vector2 scale = obj.GetComponent<collidableObjectScript>().transform.localScale;
+			Vector2 posi = obj.GetComponent<collidableObjectScript>().transform.position;
+
+			workingSave += "type=" + obj.GetComponent<collidableObjectScript>().type + ";";
+			workingSave += "rotation=" + obj.GetComponent<collidableObjectScript>().transform.rotation.eulerAngles.z.ToString() + ";";
+			workingSave += "scale={" + scale.x + "," + scale.y + "};";
+			workingSave += "position={" + posi.x + "," + posi.y + "}";
+
+			workingSave += nl;
+		}
+		if ( (!System.IO.File.Exists (path)) || ( System.IO.File.Exists (path) && GameObject.Find ("OverwriteToggle").GetComponent<UnityEngine.UI.Toggle> ().isOn)) {
+			System.IO.File.WriteAllText (path, workingSave);
+		}
+		GameObject.Find ("LevelsPanel").GetComponent<LevelPanelScript> ().UpdateAll ();
+
 	}
 }
