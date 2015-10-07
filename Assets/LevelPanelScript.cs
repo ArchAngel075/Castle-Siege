@@ -22,7 +22,7 @@ public class LevelPanelScript : MonoBehaviour {
 			GameObject aNewLevelButton = Instantiate(LevelButton);
 			aNewLevelButton.name = "LevelButton";
 			aNewLevelButton.GetComponentInChildren<UnityEngine.UI.Text>().text = System.IO.Path.GetFileNameWithoutExtension( staticLevelList[i]);
-			aNewLevelButton.GetComponent<SelectButtonScript>().fullpath = staticLevelList[i];
+			aNewLevelButton.GetComponent<LevelButtonScript>().fullpath = staticLevelList[i];
 			aNewLevelButton.transform.SetParent(this.transform);
 			aNewLevelButton.transform.localScale = new Vector3(1,1,1);
 

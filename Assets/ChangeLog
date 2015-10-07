@@ -1,0 +1,31 @@
+2015-10-07  ArchAngel075  <jaco@kotze.com>
+
+	* Assets\Main.unity:
+	* Assets\Ball.prefab:
+	* placementButton.cs:
+	* Singleton_editor.cs:
+	* Assets\Singleton.cs:
+	* LevelPanelScript.cs:
+	* Assets\BallScript.cs:
+	* Assets\Cannon.prefab:
+	* Assets\CannonScript.cs:
+	* Assets\Ball.prefab.meta:
+	* Assets\BallScript.cs.meta:
+	* Assets\PolygonCollider.prefab:
+	* Assets\Collidable_LongH.prefab:
+	* Assets\Collidable_LongB.prefab:
+	* Assets\Collidable_LongA.prefab:
+	* Assets\Collidable_Square.prefab:
+	* Assets\collidableObjectScript.cs:
+	* Assets\Collidable_Triangle.prefab:
+	* Assets\PolygonCollider.prefab.meta:
+	* Assets\Collidable_SquareNook.prefab:
+	* Assets\Collidable_LongA.prefab.meta:
+	* Assets\Collidable_LongH.prefab.meta:
+	* Assets\Collidable_LongB.prefab.meta:
+	* Assets\Collidable_Square.prefab.meta:
+	* Assets\collidableObjectScript.cs.meta:
+	* Assets\Collidable_Triangle.prefab.meta:
+	* Assets\Collidable_SquareNook.prefab.meta:
+	  
+

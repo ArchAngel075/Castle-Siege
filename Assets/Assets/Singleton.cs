@@ -21,9 +21,9 @@ public class Singleton : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
-		GameObject.Find("AppDataText").GetComponent<UnityEngine.UI.Text>().text = Application.persistentDataPath;
+		GameObject.Find ("AppDataText").GetComponent<UnityEngine.UI.Text> ().text = "";//Application.persistentDataPath;
 		System.IO.Directory.CreateDirectory (Application.persistentDataPath + "/Levels");
-		Camera.main.GetComponent<LevelWorkerScript> ().readLevelFile (System.IO.File.ReadAllText (Application.persistentDataPath + "/Levels/_load.hidden"));
+		//Camera.main.GetComponent<LevelWorkerScript> ().readLevelFile (System.IO.File.ReadAllText (Application.persistentDataPath + "/Levels/_load.hidden"));
 		foreach (GameObject obj in GameObject.FindGameObjectsWithTag("collidable")) {
 			obj.GetComponent<Rigidbody2D>().simulated = true;
 		}

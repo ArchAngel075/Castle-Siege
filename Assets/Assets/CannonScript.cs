@@ -5,16 +5,28 @@ public class CannonScript : MonoBehaviour {
 	private GameObject Cannon;
 	private Singleton Singleton;
 	public GameObject Ball;
+	public int BallIndex = 1;
 	public bool isPressing = false;
 	public float Power = 0f;
 	public bool touchOne;
 
+	public System.Collections.Generic.List<string> BallsK;
+	public System.Collections.Generic.List<GameObject> BallsV;
+	public System.Collections.Generic.List<int> BallsNumShotsLeft;
+	public System.Collections.Generic.Dictionary<string,GameObject> BallsP;
+
+	float PowerMax;
+	float PowerMin;
+
 	// Use this for initialization
 	void Start () {
+		PowerMax = 4000 * 10;
+		PowerMin = 900 * 10;
 		Cannon = GameObject.Find ("Cannon");
 
 		Singleton = GameObject.Find ("Ground").GetComponent<Singleton> ();
 		//Singleton.isWindows
+		UpdateBall ();
 	}
 	
 	// Update is called once per frame
@@ -25,16 +37,18 @@ public class CannonScript : MonoBehaviour {
 		} else {
 			UpdateDesktopDevice ();
 		}
+		UpdateCurrentBallDisplay ();
 	}
 
 	void UpdateDesktopDevice ()
 	{
+		bool isMouseAboveUI = (Camera.main.ScreenToWorldPoint(Input.mousePosition).y > Cannon.GetComponent<Rigidbody2D> ().position.y);
 		bool isMouseLeftOfCannon = (Camera.main.ScreenToWorldPoint(Input.mousePosition).x < Cannon.GetComponent<Rigidbody2D> ().position.x);
 		float additive = 0f;
 		if (isMouseLeftOfCannon) {
 			additive = -180f;
 		}
-		if (!Singleton.isBall) {
+		if (!Singleton.isBall && isMouseAboveUI) {
 
 			if (Input.GetMouseButton (0)) {
 				Cannon.transform.rotation = Quaternion.Euler(
@@ -45,9 +59,10 @@ public class CannonScript : MonoBehaviour {
 				UpdatePower();
 				isPressing = true;
 			}
-			if (!Input.GetMouseButton (0) && isPressing) {
+			if (!Input.GetMouseButton (0) && isPressing && BallsNumShotsLeft[BallIndex] > 0) {
 				ShootBall();
 				isPressing = false;
+				BallsNumShotsLeft[BallIndex] -= 1;
 			}
 		}
 	}
@@ -105,16 +120,36 @@ public class CannonScript : MonoBehaviour {
 			refPoint = Camera.main.ScreenToWorldPoint(Input.mousePosition);
 		}
 
-		Power = Vector2.Distance(Cannon.GetComponent<Rigidbody2D> ().position,refPoint)*500;
+		Power = Vector2.Distance(Cannon.GetComponent<Rigidbody2D> ().position,refPoint)*250;
+		Power *= 90;
 
 		//Debug.Log("Power " + Vector2.Distance(Cannon.GetComponent<Rigidbody2D> ().position,refPoint)*500);
 
-		if (Power < 900) {
-			Power = 900;
+		if (Power < PowerMin) {
+			Power = PowerMin;
 		}
-		if (Power > 4000f) {
-			Power = 4000f;
+		if (Power > PowerMax) {
+			Power = PowerMax;
 		}
+	}
+
+	void UpdateBall(){
+		Ball = BallsV [BallIndex];
+	}
+
+	public void NextBallType(){
+		BallIndex += 1;
+		if (BallIndex == BallsK.Count) {
+			BallIndex = 0;
+		}
+		UpdateBall ();
+	}
+
+	void UpdateCurrentBallDisplay(){
+		GameObject.Find ("CurrentBallDisplay").GetComponent<UnityEngine.UI.Image> ().sprite = Ball.GetComponent<SpriteRenderer> ().sprite;
+		GameObject.Find ("CurrentBallDisplay").GetComponent<UnityEngine.UI.Image> ().color = Ball.GetComponent<SpriteRenderer> ().color;
+		GameObject.Find ("CBD_Text").GetComponent<UnityEngine.UI.Text> ().text = BallsK[BallIndex];
+		GameObject.Find ("CBD_Text2").GetComponent<UnityEngine.UI.Text> ().text = BallsNumShotsLeft[BallIndex].ToString();
 	}
 
 	float GetAngleOf(Vector2 v1,Vector2 v2){

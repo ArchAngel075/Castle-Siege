@@ -30,7 +30,7 @@ public class Singleton_editor : MonoBehaviour {
 		foreach (GameObject obj in colls) {
 			obj.GetComponent<Rigidbody2D>().simulated = GameObject.Find("isSimulated").GetComponent<UnityEngine.UI.Toggle>().isOn;
 		}
-
+		//UnityEngine.Analytics.Analytics.
 	}
 
 	void PlaceCollidableAtMouse(){
@@ -45,7 +45,7 @@ public class Singleton_editor : MonoBehaviour {
 	void Start () {
 
 		GameObject.Find ("SaveFileDialog").GetComponent<Canvas> ().enabled = false;
-		Debug.Log (Application.persistentDataPath);
+		//Debug.Log (Application.persistentDataPath);
 		PlacementPanelScript thePlacementPanel = GameObject.Find ("PlacementsPanel").GetComponent<PlacementPanelScript> ();
 		for (int i = 0; i < Camera.main.GetComponent<LevelWorkerScript> ().collidablesK.Count; i++) {
 			//Camera.main.GetComponent<LevelWorkerScript> ().collidablesP.Add(Camera.main.GetComponent<LevelWorkerScript> ().collidablesK[i],Camera.main.GetComponent<LevelWorkerScript> ().collidablesV[i]);

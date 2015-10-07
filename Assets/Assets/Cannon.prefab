@@ -144,12 +144,14 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Ball: {fileID: 157380, guid: 6e13395ec2c250d478bb03a0836d1367, type: 2}
+  BallIndex: 1
   isPressing: 0
   Power: 0
   touchOne: 0
-  touchTwo: 0
-  v1: {x: 0, y: 0, z: 0}
-  v2: {x: 0, y: 0, z: 0}
+  BallsK:
+  - Default
+  BallsV:
+  - {fileID: 157380, guid: 6e13395ec2c250d478bb03a0836d1367, type: 2}
 --- !u!212 &21239612
 SpriteRenderer:
   m_ObjectHideFlags: 1
@@ -234,7 +236,23 @@ Prefab:
   serializedVersion: 2
   m_Modification:
     m_TransformParent: {fileID: 0}
-    m_Modifications: []
+    m_Modifications:
+    - target: {fileID: 0}
+      propertyPath: BallsK.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: BallsV.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: BallsK.Array.data[0]
+      value: Default
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: BallsV.Array.data[0]
+      value: 
+      objectReference: {fileID: 157380, guid: 6e13395ec2c250d478bb03a0836d1367, type: 2}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 0}
   m_RootGameObject: {fileID: 163648}
