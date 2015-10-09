@@ -98,6 +98,9 @@ MonoBehaviour:
   isValid: 1
   type: triangle
   isRoped: 0
+  isPointGiven: 0
+  PointText: {fileID: 164598, guid: 70b383ee7dfac3e47acfbb8942e3fb98, type: 2}
+  PointTextContainer: {fileID: 0}
 --- !u!212 &21241832
 SpriteRenderer:
   m_ObjectHideFlags: 1
@@ -167,6 +170,10 @@ Prefab:
       propertyPath: isValid
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: PointText
+      value: 
+      objectReference: {fileID: 164598, guid: 70b383ee7dfac3e47acfbb8942e3fb98, type: 2}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 0}
   m_RootGameObject: {fileID: 164376}

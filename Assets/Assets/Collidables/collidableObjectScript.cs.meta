@@ -1,10 +1,12 @@
 fileFormatVersion: 2
 guid: db980c9198800444ca5b8537e7edcb73
-timeCreated: 1443624725
+timeCreated: 1444395730
 licenseType: Free
 MonoImporter:
   serializedVersion: 2
-  defaultReferences: []
+  defaultReferences:
+  - PointText: {fileID: 164598, guid: 70b383ee7dfac3e47acfbb8942e3fb98, type: 2}
+  - PointTextContainer: {fileID: 105246, guid: 8159ef016474bc741bdd0d076ab2723b, type: 2}
   executionOrder: 0
   icon: {instanceID: 0}
   userData: 

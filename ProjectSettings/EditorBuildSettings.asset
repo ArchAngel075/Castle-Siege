@@ -11,3 +11,5 @@ EditorBuildSettings:
     path: Assets/SelectScene.unity
   - enabled: 1
     path: Assets/Assets/Main.unity
+  - enabled: 1
+    path: Assets/EditorScene.unity

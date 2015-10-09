@@ -162,7 +162,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 1472563640}
-        m_MethodName: QuitGame
+        m_MethodName: ToMainMenu
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -338,19 +338,19 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 22460474, guid: 6a21024ce2d832d44811e2e9bcdc380d, type: 2}
       propertyPath: m_AnchoredPosition.x
-      value: 0
+      value: 399.999969
       objectReference: {fileID: 0}
     - target: {fileID: 22460474, guid: 6a21024ce2d832d44811e2e9bcdc380d, type: 2}
       propertyPath: m_AnchoredPosition.y
-      value: 0
+      value: -116.666656
       objectReference: {fileID: 0}
     - target: {fileID: 22460474, guid: 6a21024ce2d832d44811e2e9bcdc380d, type: 2}
       propertyPath: m_SizeDelta.x
-      value: 0
+      value: 779.999939
       objectReference: {fileID: 0}
     - target: {fileID: 22460474, guid: 6a21024ce2d832d44811e2e9bcdc380d, type: 2}
       propertyPath: m_SizeDelta.y
-      value: 0
+      value: 213.333313
       objectReference: {fileID: 0}
     - target: {fileID: 22460474, guid: 6a21024ce2d832d44811e2e9bcdc380d, type: 2}
       propertyPath: m_AnchorMin.x
@@ -358,7 +358,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 22460474, guid: 6a21024ce2d832d44811e2e9bcdc380d, type: 2}
       propertyPath: m_AnchorMin.y
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 22460474, guid: 6a21024ce2d832d44811e2e9bcdc380d, type: 2}
       propertyPath: m_AnchorMax.x
@@ -366,7 +366,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 22460474, guid: 6a21024ce2d832d44811e2e9bcdc380d, type: 2}
       propertyPath: m_AnchorMax.y
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 22460474, guid: 6a21024ce2d832d44811e2e9bcdc380d, type: 2}
       propertyPath: m_Pivot.x

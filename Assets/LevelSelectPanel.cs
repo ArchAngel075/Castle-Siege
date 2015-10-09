@@ -57,7 +57,7 @@ public class LevelSelectPanel : MonoBehaviour {
 		
 	}
 
-	public void QuitGame(){
-		Application.Quit ();
+	public void ToMainMenu(){
+		Application.LoadLevel("MainMenuScene");
 	}
 }

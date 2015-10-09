@@ -6,9 +6,12 @@ public class collidableObjectScript : MonoBehaviour {
 	public bool isValid = false;
 	public string type = "name";
 	public bool isRoped = false;
+	public bool isPointGiven = false;
+	public GameObject PointText;
+	public GameObject PointTextContainer;
 	// Use this for initialization
 	void Start () {
-		
+		PointTextContainer = GameObject.Find ("PointsAccumed");
 	}
 	
 	// Update is called once per frame
@@ -18,11 +21,13 @@ public class collidableObjectScript : MonoBehaviour {
 		}
 		if (Life <= 0) {
 			Destroy (this.gameObject);
+			isPointGiven = true;
 		}
 	}
 
 	void OnCollisionEnter2D (Collision2D col)
 	{
+
 		//Debug.Log (col.gameObject.name);
 		if(col.gameObject.name == "Ball(Clone)" && col.relativeVelocity.magnitude > 1f)
 		{
@@ -40,12 +45,26 @@ public class collidableObjectScript : MonoBehaviour {
 	}
 
 	public void LoseLife(int scale){
-		Life -= 1;
+		Life -= scale;
 		Color oldColor = GetComponent<SpriteRenderer> ().material.color;
-		oldColor.g -= 1-(1*(Life/10));
-		oldColor.b -= 1-(1*(Life/10));
+		oldColor.g -= scale-(scale*(Life/10));
+		oldColor.b -= scale-(scale*(Life/10));
 		GetComponent<SpriteRenderer> ().material.color = oldColor;
+		if (Life <= 0) {
+			Destroy (this.gameObject);
+			isPointGiven = true;
+		}
 
+	}
 
+	void OnDestroy(){
+		if (isPointGiven) {
+			GameObject.Find ("Ground").GetComponent<Singleton> ().PointsObtained += 1;
+			GameObject.Find ("Ground").GetComponent<Singleton> ().OncolldableBreak();
+			GameObject.Find ("PointsText").GetComponent<UnityEngine.UI.Text> ().text = GameObject.Find ("Ground").GetComponent<Singleton> ().PointsObtained.ToString ();
+			GameObject newPointText = Instantiate(PointText);
+			newPointText.transform.position = Camera.main.WorldToScreenPoint(transform.position);
+			newPointText.transform.SetParent(PointTextContainer.transform);
+		}
 	}
 }

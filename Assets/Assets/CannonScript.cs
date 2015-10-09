@@ -33,7 +33,8 @@ public class CannonScript : MonoBehaviour {
 	void Update () {
 
 		if (!Singleton.isWindows) {
-			UpdateAndroidDevice ();
+			//UpdateAndroidDevice ();
+			UpdateDesktopDevice ();
 		} else {
 			UpdateDesktopDevice ();
 		}
@@ -55,6 +56,7 @@ public class CannonScript : MonoBehaviour {
 					Cannon.transform.rotation.eulerAngles.x,
 					Cannon.transform.rotation.y,
 					GetAngleOf(Cannon.GetComponent<Rigidbody2D> ().position,Camera.main.ScreenToWorldPoint(Input.mousePosition))+additive);
+				GameObject.Find ("AngleSlider").GetComponent<UnityEngine.UI.Slider> ().value = Mathf.Rad2Deg*Cannon.transform.rotation.z;
 
 				UpdatePower();
 				isPressing = true;
@@ -84,10 +86,12 @@ public class CannonScript : MonoBehaviour {
 						Cannon.transform.rotation.eulerAngles.x,
 						Cannon.transform.rotation.y,
 						GetAngleOf(Cannon.GetComponent<Rigidbody2D> ().position,Camera.main.ScreenToWorldPoint(Input.GetTouch(0).position))+additive);
+					GameObject.Find ("AngleSlider").GetComponent<UnityEngine.UI.Slider> ().value = Mathf.Rad2Deg*Cannon.transform.rotation.z;
 					UpdatePower();
 				}
-				if (Input.GetTouch(0).phase == TouchPhase.Ended) {
+				if (Input.GetTouch(0).phase == TouchPhase.Ended && BallsNumShotsLeft[BallIndex] > 0) {
 					ShootBall();
+					BallsNumShotsLeft[BallIndex] -= 1;
 				}
 			}
 		}
@@ -109,7 +113,7 @@ public class CannonScript : MonoBehaviour {
 		Singleton.isBall = true;
 		Singleton.setLooking ();
 		Power = 0;
-		
+		GameObject.Find ("Ground").GetComponent<Singleton> ().OnShoot ();
 	}
 
 	void UpdatePower(){
@@ -120,7 +124,7 @@ public class CannonScript : MonoBehaviour {
 			refPoint = Camera.main.ScreenToWorldPoint(Input.mousePosition);
 		}
 
-		Power = Vector2.Distance(Cannon.GetComponent<Rigidbody2D> ().position,refPoint)*100;
+		Power = Vector2.Distance(Cannon.GetComponent<Rigidbody2D> ().position,refPoint)*25;
 		Power *= 90;
 
 		//Debug.Log("Power " + Vector2.Distance(Cannon.GetComponent<Rigidbody2D> ().position,refPoint)*500);
@@ -131,6 +135,7 @@ public class CannonScript : MonoBehaviour {
 		if (Power > PowerMax) {
 			Power = PowerMax;
 		}
+		GameObject.Find ("PowerSlider").GetComponent<UnityEngine.UI.Slider> ().value = Power / PowerMax;
 	}
 
 	void UpdateBall(){

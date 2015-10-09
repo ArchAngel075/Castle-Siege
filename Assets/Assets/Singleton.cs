@@ -19,14 +19,30 @@ public class Singleton : MonoBehaviour {
 
 	public bool isWindows = false;
 
+	private bool isInitKine = false;
+
+	private int PointsTotalPossible = 0;
+	public int PointsObtained = 0;
+
+	public GameObject ping01;
+	public GameObject ping02;
+	public AudioSource boomSource;
+
+
 	// Use this for initialization
 	void Start () {
+		Screen.SetResolution (800, 600,true);
+
+
 		GameObject.Find ("AppDataText").GetComponent<UnityEngine.UI.Text> ().text = "";//Application.persistentDataPath;
 		System.IO.Directory.CreateDirectory (Application.persistentDataPath + "/Levels");
 		Camera.main.GetComponent<LevelWorkerScript> ().readLevelFile (System.IO.File.ReadAllText (Application.persistentDataPath + "/Levels/_load.hidden"));
-		Camera.main.GetComponent<analyticsScript> ().UpdatePlayedLevel (System.IO.Path.GetFileNameWithoutExtension( System.IO.File.ReadAllText (Application.persistentDataPath + "/Levels/_load.hidden")));		foreach (GameObject obj in GameObject.FindGameObjectsWithTag("collidable")) {
-			obj.GetComponent<Rigidbody2D>().isKinematic = true;
+		foreach (GameObject obj in GameObject.FindGameObjectsWithTag("collidable")) {
+			PointsTotalPossible += 1;
 		}
+
+
+		Camera.main.GetComponent<analyticsScript> ().UpdatePlayedLevel (System.IO.Path.GetFileNameWithoutExtension( System.IO.File.ReadAllText (Application.persistentDataPath + "/Levels/_load.hidden")));		
 		targetTransform = Pos_Shooting.transform;
 		if (Application.platform == RuntimePlatform.Android) {
 			isWindows = false;
@@ -38,6 +54,12 @@ public class Singleton : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
+		if (!isInitKine) {
+			foreach (GameObject obj in GameObject.FindGameObjectsWithTag("collidable")) {
+				obj.GetComponent<Rigidbody2D>().isKinematic = false;
+			}
+			isInitKine = true;
+		}
 		if (Vector3.Distance (Camera.main.transform.position, targetTransform.position) > 0) {
 			Camera.main.transform.position = Vector3.MoveTowards (Camera.main.transform.position, targetTransform.position, Time.deltaTime * 2);
 		}
@@ -73,5 +95,20 @@ public class Singleton : MonoBehaviour {
 
 	public void QuitToSelection(){
 		Application.LoadLevel ("SelectScene");
+	}
+
+	public void OnPointGet(){
+		ping01.GetComponent<AudioSourcesScript>().Play ();
+
+	}
+
+	public void OncolldableBreak(){
+		ping02.GetComponent<AudioSourcesScript> ().Play ();
+
+	}
+
+	public void OnShoot(){
+		boomSource.Play ();
+
 	}
 }

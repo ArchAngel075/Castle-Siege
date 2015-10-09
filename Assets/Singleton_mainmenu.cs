@@ -20,5 +20,8 @@ public class Singleton_mainmenu : MonoBehaviour {
 		Application.LoadLevel("EditorScene");
 	}
 
-
+	public void QuitGame(){
+		Application.Quit ();
+	}
+	
 }

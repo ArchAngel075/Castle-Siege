@@ -15,13 +15,13 @@ public class MouseCursorScript : MonoBehaviour {
 
 	void OnTriggerEnter2D(Collider2D col){
 		if (col.CompareTag ("collidable")) {
-			col.gameObject.GetComponent<Edit_ObjectScript>().isMouseOver = true;
+			//col.gameObject.GetComponent<Edit_ObjectScript>().isMouseOver = true;
 		}
 	}
 	
 	void OnTriggerExit2D(Collider2D col){
 		if (col.CompareTag ("collidable")) {
-			col.gameObject.GetComponent<Edit_ObjectScript>().isMouseOver = false;
+			//col.gameObject.GetComponent<Edit_ObjectScript>().isMouseOver = false;
 		}
 	}
 }

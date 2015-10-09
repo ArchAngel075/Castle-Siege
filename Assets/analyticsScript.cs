@@ -8,6 +8,7 @@ public class analyticsScript : MonoBehaviour {
 		googleAnalytics.StartSession();
 		googleAnalytics.LogScreen(Application.loadedLevelName);
 		UnityEngine.Analytics.Analytics.SetUserGender (UnityEngine.Analytics.Gender.Unknown);
+		googleAnalytics.SetUserIDOverride ("Dev-Admin");
 		googleAnalytics.DispatchHits ();
 	}
 	

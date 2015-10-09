@@ -105,6 +105,7 @@ public class LevelWorkerScript : MonoBehaviour {
 		foreach (string line in System.IO.File.ReadAllLines(path)) {
 			GameObject newCollidable = GetComponent<LevelWorkerScript>().BuildCollidableFromLine(line);
 			newCollidable.transform.SetParent (GameObject.Find ("GameCollidables").transform);
+			newCollidable.GetComponent<Rigidbody2D>().isKinematic = true;
 			collidables.Add(newCollidable);
 		}
 	}
