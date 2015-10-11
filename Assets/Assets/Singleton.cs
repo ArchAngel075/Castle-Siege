@@ -11,6 +11,7 @@ public class Singleton : MonoBehaviour {
 
 	public Transform targetTransform;
 	public float targetDepth = 8f;
+	public float CameraShake = 0;
 
 	public System.Collections.Generic.List<Ray2D> Ray2DList = new System.Collections.Generic.List<Ray2D>();
 	public Ray2D lookRay;
@@ -54,16 +55,18 @@ public class Singleton : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
+		UpdateScreenShake ();
 		if (!isInitKine) {
 			foreach (GameObject obj in GameObject.FindGameObjectsWithTag("collidable")) {
 				obj.GetComponent<Rigidbody2D>().isKinematic = false;
 			}
 			isInitKine = true;
 		}
-		if (Vector3.Distance (Camera.main.transform.position, targetTransform.position) > 0) {
+		//if (Vector3.Distance (Camera.main.transform.position, targetTransform.position) > 0) {
 			Camera.main.transform.position = Vector3.MoveTowards (Camera.main.transform.position, targetTransform.position, Time.deltaTime * 2);
-		}
+		//}
 		Camera.main.GetComponent<Camera> ().orthographicSize = Mathf.MoveTowards (Camera.main.GetComponent<Camera> ().orthographicSize, targetDepth, Time.deltaTime * 1.5f);
+
 	}
 	
 	public void setLooking(){
@@ -104,11 +107,34 @@ public class Singleton : MonoBehaviour {
 
 	public void OncolldableBreak(){
 		ping02.GetComponent<AudioSourcesScript> ().Play ();
+		doScreenShake (0.8f);
 
 	}
 
 	public void OnShoot(){
 		boomSource.Play ();
+
+	}
+
+	void UpdateScreenShake(){
+		if (CameraShake > 0) {
+			Vector3 now = Camera.main.transform.position;
+			Vector3 want = now + new Vector3 (Mathf.Clamp( Random.Range(-1,1) * CameraShake,-0.15f,0.15f), 
+			                                  Mathf.Clamp( Random.Range(-1,1) * CameraShake,-0.15f,0.15f),
+			                                  Mathf.Clamp( Random.Range(-1,1) * CameraShake,-0.15f,0.15f));
+			Vector3 after = Vector3.Lerp (now, want, 0.5f);
+			CameraShake -= Time.deltaTime;
+			if( Vector3.Distance(targetTransform.position,Camera.main.transform.position) < 2f){
+				Camera.main.transform.position = after;
+			}
+		} else {
+			CameraShake = 0;
+		}
+	}
+
+	public void doScreenShake(float intensity){
+		CameraShake += Random.Range(0,8)*intensity;
+		CameraShake = Mathf.Clamp (CameraShake, 0, 0.7f);
 
 	}
 }

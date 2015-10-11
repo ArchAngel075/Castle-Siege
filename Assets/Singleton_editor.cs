@@ -15,6 +15,8 @@ public class Singleton_editor : MonoBehaviour {
 	public GameObject inspectorMods;
 
 	public string PlacementType;
+
+	public bool isOnUIElement = true;
 	/*
 		Mode 0 : None - Selection Mode
 		Mode 1 : Polygon - Add polygonObject
@@ -81,7 +83,7 @@ public class Singleton_editor : MonoBehaviour {
 				PlaceCollidableAtMouse();
 			}
 		}
-		if (Input.GetMouseButtonDown (0)) {
+		if (Input.GetMouseButtonDown (0) && !isOnUIElement) {
 			Ray MouseRay = Camera.main.ScreenPointToRay(Input.mousePosition);
 			RaycastHit2D HIT = Physics2D.Raycast(MouseRay.origin,MouseRay.direction);
 			if(HIT.collider != null){
@@ -127,12 +129,12 @@ public class Singleton_editor : MonoBehaviour {
 			}
 		}
 
-		if (Input.GetMouseButton (1) && inspectedObject != null && !inspectorMods.GetComponent<InspectedModsScript>().isRotating) {
-					Vector3 mpos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-					mpos.z = inspectedObject.transform.position.z;
-					Vector3 diff = Vector3.MoveTowards(inspectedObject.transform.position,mpos,1f);
-					inspectedObject.transform.position = diff;
-		}
+//		if (Input.GetMouseButton (1) && inspectedObject != null && !inspectorMods.GetComponent<InspectedModsScript>().isRotating) {
+//					Vector3 mpos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+//					mpos.z = inspectedObject.transform.position.z;
+//					Vector3 diff = Vector3.MoveTowards(inspectedObject.transform.position,mpos,1f);
+//					inspectedObject.transform.position = diff;
+//		}
 
 		if (Input.GetMouseButtonUp (0) && inspectorMods.GetComponent<InspectedModsScript> ().isRotating) {
 			inspectorMods.GetComponent<InspectedModsScript> ().isRotating = false;
@@ -216,7 +218,7 @@ public class Singleton_editor : MonoBehaviour {
 		if (Input.GetMouseButtonDown (0)) {
 			polygonPoints.Add (Camera.main.ScreenToWorldPoint(Input.mousePosition));
 		}
-		if (Input.GetMouseButtonDown (1)) {
+		if (Input.GetMouseButtonDown (1) && !isOnUIElement) {
 			polygonPoints.Add (polygonPoints[0]);
 			SetMode(0);
 		}
