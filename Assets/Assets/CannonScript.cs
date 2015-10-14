@@ -15,6 +15,8 @@ public class CannonScript : MonoBehaviour {
 	public System.Collections.Generic.List<int> BallsNumShotsLeft;
 	public System.Collections.Generic.Dictionary<string,GameObject> BallsP;
 
+
+
 	float PowerMax;
 	float PowerMin;
 
