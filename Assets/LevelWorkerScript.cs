@@ -17,6 +17,7 @@ public class LevelWorkerScript : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
+		UpdateCollidableIndexes ();
 		for (int i = 0; i < collidablesK.Count; i++) {
 			collidablesP.Add(collidablesK[i],collidablesV[i]);
 			//Debug.Log(collidablesP.Count);
@@ -92,6 +93,20 @@ public class LevelWorkerScript : MonoBehaviour {
 		if (Vars.ContainsKey ("rotation")) {
 			newCollidable.transform.Rotate( new Vector3(0,0,(float)(System.Convert.ToDouble (Vars ["rotation"]))));
 		}
+		if (Vars.ContainsKey ("index")) {
+			newCollidable.GetComponent<collidableObjectScript> ().Index = System.Convert.ToInt32 (Vars ["index"]);
+		} else {
+			throw new MissingReferenceException ("level is outdated. Either fetch an updated version or contanct Developers");
+		}
+
+		if (Vars.ContainsKey ("welds")) {
+
+			System.Collections.Generic.List<int> indexesWeldedTo = new System.Collections.Generic.List<int> ();
+			foreach (string str in Vars["welds"].Split(',')) {
+				indexesWeldedTo.Add (System.Convert.ToInt16 (str));
+			}
+			newCollidable.GetComponent<collidableObjectScript> ().IndexesWeldedTo = indexesWeldedTo.ToArray ();
+		}
 		//
 		return newCollidable;
 	}
@@ -110,6 +125,14 @@ public class LevelWorkerScript : MonoBehaviour {
 		}
 	}
 
+	public void UpdateCollidableIndexes(){
+		int counter = -1;
+		foreach (GameObject tested in GameObject.FindGameObjectsWithTag("collidable")) {
+			counter++;
+			tested.GetComponent<collidableObjectScript>().Index = counter;
+		}
+	}
+
 	public void SaveAll(){
 		string path = Application.persistentDataPath + "/Levels/";
 		path += GameObject.Find ("FileNameInput").GetComponent<UnityEngine.UI.InputField> ().text;
@@ -120,14 +143,30 @@ public class LevelWorkerScript : MonoBehaviour {
 		string workingSave = "";
 		string nl = System.Environment.NewLine;
 		//type=square;position={0,3};rotation=90;scale={-0.5,-0.5}
+		int indexCounter = -1;
 		foreach (GameObject obj in colls) {
+			indexCounter++;
 			Vector2 scale = obj.GetComponent<collidableObjectScript>().transform.localScale;
 			Vector2 posi = obj.GetComponent<collidableObjectScript>().transform.position;
+			string weldString = "";
+			if(obj.GetComponent<collidableObjectScript>().ObjectsWeldedTo.Count > 0){
+				foreach (GameObject item in obj.GetComponent<collidableObjectScript>().ObjectsWeldedTo) {
+					weldString += item.GetComponent<collidableObjectScript>().Index.ToString() + ",";
+				}
+				Debug.LogError("weld string BEFORE :" + weldString);
+				weldString = weldString.Substring(0,weldString.Length-1);
+				Debug.LogError("weld string AFTER :" + weldString);
+			}
 
 			workingSave += "type=" + obj.GetComponent<collidableObjectScript>().type + ";";
 			workingSave += "rotation=" + obj.GetComponent<collidableObjectScript>().transform.rotation.eulerAngles.z.ToString() + ";";
 			workingSave += "scale={" + scale.x + "," + scale.y + "};";
-			workingSave += "position={" + posi.x + "," + posi.y + "}";
+			workingSave += "position={" + posi.x + "," + posi.y + "};";
+			workingSave += "index=" + indexCounter;
+			if(weldString.Length >= 1){
+				workingSave += ";";
+				workingSave += "welds=" + weldString;
+			}
 
 			workingSave += nl;
 		}

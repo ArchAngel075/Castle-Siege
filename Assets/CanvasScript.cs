@@ -17,13 +17,13 @@ public class CanvasScript : MonoBehaviour, IPointerEnterHandler, IPointerExitHan
 
 	public void OnPointerEnter(PointerEventData data){
 		Camera.main.GetComponent<Singleton_editor> ().isOnUIElement = true;
-		Debug.LogError ("IN");
+	//	Debug.LogError ("IN");
 	}
 	
 	public void OnPointerExit (PointerEventData eventData) 
 	{
 		Debug.Log ("The cursor exited the selectable UI element.");
 		Camera.main.GetComponent<Singleton_editor> ().isOnUIElement = false;
-		Debug.LogError ("OUT");
+	//	Debug.LogError ("OUT");
 	}
 }

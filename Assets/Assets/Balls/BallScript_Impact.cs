@@ -2,7 +2,7 @@
 using System.Collections;
 
 public class BallScript_Impact : MonoBehaviour {
-	public float Lifetime = 6;
+	public float Lifetime = 1;
 	private Singleton Singleton;
 	public bool useEmmiter = false;
 	private int damage = 36;

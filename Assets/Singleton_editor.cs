@@ -34,7 +34,7 @@ public class Singleton_editor : MonoBehaviour {
 	public void UpdateSimulate(){
 		GameObject[] colls = GameObject.FindGameObjectsWithTag ("collidable");
 		foreach (GameObject obj in colls) {
-			obj.GetComponent<Rigidbody2D>().isKinematic = GameObject.Find("isSimulated").GetComponent<UnityEngine.UI.Toggle>().isOn;
+			obj.GetComponent<Rigidbody2D>().isKinematic = !GameObject.Find("isSimulated").GetComponent<UnityEngine.UI.Toggle>().isOn;
 		}
 		//UnityEngine.Analytics.Analytics.
 	}
@@ -68,9 +68,8 @@ public class Singleton_editor : MonoBehaviour {
 			thePlacementPanel.AddPlacement(Camera.main.GetComponent<LevelWorkerScript> ().collidablesV[i],Camera.main.GetComponent<LevelWorkerScript> ().collidablesK[i]);
 		}
 		//readLevelFile (Application.persistentDataPath + "/Levels/Level01.cl");
-
 	}
-	
+
 	// Update is called once per frame
 	void Update () {
 		Vector2 point = Camera.main.ScreenToWorldPoint (Input.mousePosition);
@@ -87,7 +86,7 @@ public class Singleton_editor : MonoBehaviour {
 			Ray MouseRay = Camera.main.ScreenPointToRay(Input.mousePosition);
 			RaycastHit2D HIT = Physics2D.Raycast(MouseRay.origin,MouseRay.direction);
 			if(HIT.collider != null){
-				Debug.LogError(HIT.collider.name);
+				//Debug.LogError(HIT.collider.name);
 				if(HIT.collider.CompareTag("collidable")){
 					if(Input.GetKey(KeyCode.LeftShift)){
 						if(HIT.collider.GetComponent<Edit_ObjectScript>().isSelected){
@@ -105,7 +104,10 @@ public class Singleton_editor : MonoBehaviour {
 						if(inspectedObject != null){
 							inspectedObject.GetComponent<Edit_ObjectScript>().OnDeselect();
 						}
-
+						foreach(GameObject selectedObject in inspectedObjectsList){
+							selectedObject.GetComponent<Edit_ObjectScript>().OnDeselect();
+						}
+						inspectedObjectsList.Clear();
 						HIT.collider.GetComponent<Edit_ObjectScript>().OnSelect();
 						inspectedObject = HIT.collider.gameObject;
 						if(!inspectedObjectsList.Contains(inspectedObject)){
@@ -212,6 +214,33 @@ public class Singleton_editor : MonoBehaviour {
 
 	public void SetMode(int mode){
 		Mode = mode;
+	}
+
+	public void WeldSelected(){
+		foreach (GameObject objA in inspectedObjectsList) {
+			foreach (GameObject objB in inspectedObjectsList) {
+				if(objA != objB){
+					objA.GetComponent<Edit_ObjectScript>().weldTo(objB);
+				}
+				
+			}
+
+		}
+
+	}
+
+	public void UnweldSelected(){
+		foreach (GameObject objA in inspectedObjectsList) {
+			foreach (GameObject objB in inspectedObjectsList) {
+				if(objA != objB){
+					objA.GetComponent<Edit_ObjectScript>().UnweldTo(objB);
+					objB.GetComponent<Edit_ObjectScript>().UnweldTo(objA);
+				}
+				
+			}
+			
+		}
+		
 	}
 
 	void UpdateMode1(){

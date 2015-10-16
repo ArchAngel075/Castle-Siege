@@ -3,6 +3,7 @@ using System.Collections;
 
 public class Edit_ObjectScript : MonoBehaviour {
 	public bool isSelected = false;
+	public
 	// Use this for initialization
 	void Start () {
 
@@ -28,12 +29,41 @@ public class Edit_ObjectScript : MonoBehaviour {
 		UpdateInspection ();
 	}
 
+	public void UnweldTo(GameObject objB){
+		if (GetComponent<collidableObjectScript> ().ObjectsWeldedTo.Contains (objB)) {
+			DistanceJoint2D aWeld = null;
+			foreach(DistanceJoint2D welding in GetComponent<collidableObjectScript>().Welds){
+				if(welding.connectedBody.gameObject == objB.gameObject){
+					aWeld = welding;
+				}
+			}
+			if(aWeld != null){
+				GetComponent<collidableObjectScript> ().ObjectsWeldedTo.Remove (objB);
+				GetComponent<collidableObjectScript> ().Welds.Remove (aWeld);
+				Destroy(aWeld);
+			}
+		}
+	}
+
+	public void weldTo(GameObject objB){
+		if (!GetComponent<collidableObjectScript> ().ObjectsWeldedTo.Contains (objB)) {
+			DistanceJoint2D	aWeld = this.gameObject.AddComponent<DistanceJoint2D>();
+			aWeld.enableCollision = true;
+			aWeld.connectedBody = objB.GetComponent<Rigidbody2D>();
+			aWeld.distance = Vector2.Distance(new Vector2(this.transform.position.x,this.transform.position.y),
+			                                  new Vector2(objB.transform.position.x,objB.transform.position.y));
+			GetComponent<collidableObjectScript>().Welds.Add(aWeld);
+			GetComponent<collidableObjectScript> ().ObjectsWeldedTo.Add (objB);
+		}
+
+	}
+
 	public void OnDeselect(){
 		isSelected = false;
 		GetComponent<SpriteRenderer> ().color = Color.white;
 		GameObject.Find ("RotationInput").GetComponent<UnityEngine.UI.InputField> ().text = "NA";
 		GameObject.Find ("ScaleXInput").GetComponent<UnityEngine.UI.InputField> ().text = "NA";
 		GameObject.Find ("ScaleYInput").GetComponent<UnityEngine.UI.InputField> ().text = "NA";
-		GetComponent<Rigidbody2D> ().isKinematic = GameObject.Find("isSimulated").GetComponent<UnityEngine.UI.Toggle>().isOn;;
+		GetComponent<Rigidbody2D> ().isKinematic = !GameObject.Find("isSimulated").GetComponent<UnityEngine.UI.Toggle>().isOn;;
 	}
 }

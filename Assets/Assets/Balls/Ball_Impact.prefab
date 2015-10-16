@@ -101,7 +101,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b1964c081b606874585fb6141b78de57, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Lifetime: 24
+  Lifetime: 6
   useEmmiter: 0
 --- !u!198 &19864482
 ParticleSystem:
@@ -1249,6 +1249,10 @@ Prefab:
     - target: {fileID: 0}
       propertyPath: m_LocalScale.y
       value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: Lifetime
+      value: 6
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 0}

@@ -40,6 +40,7 @@ public class Singleton : MonoBehaviour {
 		Camera.main.GetComponent<LevelWorkerScript> ().readLevelFile (System.IO.File.ReadAllText (Application.persistentDataPath + "/Levels/_load.hidden"));
 		foreach (GameObject obj in GameObject.FindGameObjectsWithTag("collidable")) {
 			PointsTotalPossible += 1;
+			//obj.GetComponent<collidableObjectScript>().StartupWelds ();
 		}
 
 
