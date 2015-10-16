@@ -17,6 +17,7 @@ public class LevelWorkerScript : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
+
 		UpdateCollidableIndexes ();
 		for (int i = 0; i < collidablesK.Count; i++) {
 			collidablesP.Add(collidablesK[i],collidablesV[i]);
