@@ -51,11 +51,11 @@ public class collidableObjectScript : MonoBehaviour {
 			Destroy (this.gameObject);
 			isPointGiven = true;
 		}
-//		foreach (DistanceJoint2D welding in Welds) {
-//			if(welding != null && (welding.connectedBody == null || welding.connectedBody.gameObject == null)){
-//				Destroy(welding);
-//			}
-//		}
+		foreach (DistanceJoint2D welding in Welds) {
+			if(welding != null && (welding.connectedBody == null || welding.connectedBody.gameObject == null)){
+				Destroy(welding);
+			}
+		}
 	}
 
 	void OnCollisionEnter2D (Collision2D col)
@@ -64,6 +64,9 @@ public class collidableObjectScript : MonoBehaviour {
 		//Debug.Log (col.gameObject.name);
 		if(col.gameObject.name == "Ball(Clone)" && col.relativeVelocity.magnitude > 1f)
 		{
+			foreach (DistanceJoint2D welding in Welds) {
+				Destroy(welding);
+			}
 			col.gameObject.GetComponent<BallScript>().Lifetime -= 1;
 			LoseLife(3);
 		}
@@ -84,21 +87,23 @@ public class collidableObjectScript : MonoBehaviour {
 		oldColor.b -= scale-(scale*(Life/10));
 		GetComponent<SpriteRenderer> ().material.color = oldColor;
 		if (Life <= 0) {
+			GameObject newPointText = Instantiate(PointText);
+			newPointText.transform.position = Camera.main.WorldToScreenPoint(transform.position);
+			
+			newPointText.transform.SetParent(PointTextContainer.transform);
 			isPointGiven = true;
-			Destroy (this.gameObject,0.1f);
-
+			newPointText.GetComponent<pointGetScript>().SetPointGot(1);
+			Destroy (this.gameObject);
 		}
 
 	}
 
 	void OnDestroy(){
 		if (isPointGiven) {
+			//GameObject.Find ("Ground").GetComponent<Singleton> ().PointsObtained += 1;
 			GameObject.Find ("Ground").GetComponent<Singleton> ().OncolldableBreak();
+			GameObject.Find ("PointsText").GetComponent<UnityEngine.UI.Text> ().text = GameObject.Find ("Ground").GetComponent<Singleton> ().PointsObtained.ToString ();
 
-			GameObject newPointText = Instantiate(PointText);
-			newPointText.GetComponent<pointGetScript>().SetPointGot(1);
-			newPointText.transform.position = Camera.main.WorldToScreenPoint(transform.position);
-			newPointText.transform.SetParent(PointTextContainer.transform);
 		}
 	}
 }
