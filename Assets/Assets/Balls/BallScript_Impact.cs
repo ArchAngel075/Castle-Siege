@@ -31,7 +31,6 @@ public class BallScript_Impact : MonoBehaviour {
 	}
 	bool OnCollisionEnter2D (Collision2D col)
 	{	
-		Debug.Log (col.relativeVelocity.magnitude + "," + col.gameObject.name);
 		if (col.gameObject.name == "Boundary") {
 			DestroyBall ();
 			return true;

@@ -2,6 +2,8 @@
 using System.Collections;
 
 public class CannonScript : MonoBehaviour {
+
+
 	private GameObject Cannon;
 	private Singleton Singleton;
 	public GameObject Ball;
@@ -15,7 +17,7 @@ public class CannonScript : MonoBehaviour {
 	public System.Collections.Generic.List<int> BallsNumShotsLeft;
 	public System.Collections.Generic.Dictionary<string,GameObject> BallsP;
 
-
+	public int BonusPoints = 0;
 
 	float PowerMax;
 	float PowerMin;
@@ -33,7 +35,7 @@ public class CannonScript : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-
+		Cannon.transform.position = new Vector2 (-9.64f, 1.1f);
 		if (!Singleton.isWindows) {
 			//UpdateAndroidDevice ();
 			UpdateDesktopDevice ();
@@ -45,8 +47,8 @@ public class CannonScript : MonoBehaviour {
 
 	void UpdateDesktopDevice ()
 	{
-		bool isMouseAboveUI = (Camera.main.ScreenToWorldPoint(Input.mousePosition).y > Cannon.GetComponent<Rigidbody2D> ().position.y);
-		bool isMouseLeftOfCannon = (Camera.main.ScreenToWorldPoint(Input.mousePosition).x < Cannon.GetComponent<Rigidbody2D> ().position.x);
+		bool isMouseAboveUI = (Camera.main.ScreenToWorldPoint(Input.mousePosition).y > this.GetComponent<Rigidbody2D> ().position.y);
+		bool isMouseLeftOfCannon = (Camera.main.ScreenToWorldPoint(Input.mousePosition).x < this.GetComponent<Rigidbody2D> ().position.x);
 		float additive = 0f;
 		if (isMouseLeftOfCannon) {
 			additive = -180f;
@@ -54,10 +56,10 @@ public class CannonScript : MonoBehaviour {
 		if (!Singleton.isBall && isMouseAboveUI) {
 
 			if (Input.GetMouseButton (0)) {
-				Cannon.transform.rotation = Quaternion.Euler(
-					Cannon.transform.rotation.eulerAngles.x,
-					Cannon.transform.rotation.y,
-					GetAngleOf(Cannon.GetComponent<Rigidbody2D> ().position,Camera.main.ScreenToWorldPoint(Input.mousePosition))+additive);
+				this.transform.rotation = Quaternion.Euler(
+					this.transform.rotation.eulerAngles.x,
+					this.transform.rotation.y,
+					GetAngleOf(this.GetComponent<Rigidbody2D> ().position,Camera.main.ScreenToWorldPoint(Input.mousePosition))+additive);
 				GameObject.Find ("AngleSlider").GetComponent<UnityEngine.UI.Slider> ().value = Mathf.Rad2Deg*Cannon.transform.rotation.z;
 
 				UpdatePower();
@@ -162,10 +164,21 @@ public class CannonScript : MonoBehaviour {
 	float GetAngleOf(Vector2 v1,Vector2 v2){
 		return Mathf.Atan ((v2.y - v1.y) / (v2.x - v1.x)) * Mathf.Rad2Deg;
 	}
+
 	
-	
-	void GenericUpdate(){
-		
-		
+	public int GetTotalBallsLeft(){
+		int Count = 0;
+		foreach (int item in BallsNumShotsLeft) {
+			Count += item;
+		}
+		return Count;
+	}
+
+	public int GetTotalBallsPossible(){
+		int Count = 0;
+		foreach (int item in BallsNumShotsLeft) {
+			Count += 2;
+		}
+		return Count;
 	}
 }

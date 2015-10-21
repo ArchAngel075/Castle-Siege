@@ -41,9 +41,6 @@ public class BallScript : MonoBehaviour {
 			foreach (GameObject obj in list) {
 				float Distance = Vector2.Distance (this.transform.position, obj.gameObject.transform.position);
 				if (Distance < 2f) {
-					foreach (DistanceJoint2D welding in col.gameObject.GetComponent<collidableObjectScript>().Welds) {
-						Destroy(welding);
-					}
 					Vector2 direction = this.transform.position - obj.gameObject.transform.position;
 					obj.GetComponent<Rigidbody2D> ().AddForce (direction * (-1850 * (Distance / 4)));
 					//Singleton.Ray2DList.Add (new Ray2D (this.transform.position, direction));

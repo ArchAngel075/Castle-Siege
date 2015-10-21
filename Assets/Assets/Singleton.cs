@@ -22,12 +22,18 @@ public class Singleton : MonoBehaviour {
 
 	private bool isInitKine = false;
 
-	private int PointsTotalPossible = 0;
+	public int PointsTotalPossible = 0;
 	public int PointsObtained = 0;
+	public int PointsObtainedBonus = 0;
 
 	public GameObject ping01;
 	public GameObject ping02;
 	public AudioSource boomSource;
+
+	int BrokenThisBall = 0;
+
+	bool isEndGame = false;
+	float isEndGamebuffer = 2f;
 
 
 	// Use this for initialization
@@ -59,6 +65,11 @@ public class Singleton : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
+		if (Random.Range (0, 1000) <= 2 && GameObject.Find ("Decor").GetComponent<DecoreHandlerScript> ().CanMakeDecore()) {
+			GameObject.Find ("Decor").GetComponent<DecoreHandlerScript> ().MakeDecore ();
+		}
+
+
 		UpdateScreenShake ();
 		if (!isInitKine) {
 			foreach (GameObject obj in GameObject.FindGameObjectsWithTag("collidable")) {
@@ -71,6 +82,19 @@ public class Singleton : MonoBehaviour {
 		//}
 		Camera.main.GetComponent<Camera> ().orthographicSize = Mathf.MoveTowards (Camera.main.GetComponent<Camera> ().orthographicSize, targetDepth, Time.deltaTime * 1.5f);
 
+		if (GameObject.FindGameObjectsWithTag ("collidable").Length == 0 || GameObject.Find ("Cannon").GetComponent<CannonScript> ().GetTotalBallsLeft () == 0 && !isEndGame && !isBall) {
+			isEndGamebuffer -= Time.deltaTime;
+			if(isEndGamebuffer <= 0){
+				OnEndGame();
+				isEndGame = true;
+			}
+		}
+
+	}
+
+	public void OnEndGame(){
+		GameObject.Find ("ScoreScreen").GetComponent<Canvas> ().enabled = true;
+		GameObject.Find ("ScoreScreen").GetComponent<ScoreScreenScript> ().InitPointCounter ();
 	}
 	
 	public void setLooking(){
@@ -104,15 +128,23 @@ public class Singleton : MonoBehaviour {
 		Application.LoadLevel ("SelectScene");
 	}
 
-	public void OnPointGet(){
+	public void OnPointGet(int point){
+		PointsObtained += point;
+		PointsObtainedBonus += (1+(point*GetBonus()));
+		GameObject.Find ("PointsText").GetComponent<UnityEngine.UI.Text> ().text = PointsObtained.ToString ();
 		ping01.GetComponent<AudioSourcesScript>().Play ();
-
 	}
 
 	public void OncolldableBreak(){
 		ping02.GetComponent<AudioSourcesScript> ().Play ();
 		doScreenShake (0.8f);
+		if (isBall) {
+			BrokenThisBall += 1;
+		}
+	}
 
+	public int GetBonus(){
+		return System.Convert.ToInt32(BrokenThisBall * 0.8f);
 	}
 
 	public void OnShoot(){
@@ -141,4 +173,5 @@ public class Singleton : MonoBehaviour {
 		CameraShake = Mathf.Clamp (CameraShake, 0, 0.7f);
 
 	}
+
 }
